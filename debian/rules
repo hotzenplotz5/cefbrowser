@@ -1,0 +1,33 @@
+#!/usr/bin/make -f
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+
+include /usr/share/dpkg/architecture.mk
+
+BUILDDIR := obj-$(DEB_HOST_GNU_TYPE)
+
+%:
+	dh $@ --buildsystem=meson
+
+override_dh_auto_configure:
+	test -d subprojects/cef/Release
+	test -d subprojects/cef/Resources
+	test -d subprojects/cpr
+	test -d subprojects/mini
+	test -d subprojects/spdlog
+	test -d subprojects/sqlite3
+	test -d subprojects/thrift
+	test -d subprojects/tiny_process_library
+	dh_auto_configure --buildsystem=meson -- -Darch=x86_64 -Dbuildtype=release
+
+override_dh_auto_install:
+	install -d debian/cefbrowser/usr/lib/cefbrowser
+	cp -a $(BUILDDIR)/Release/. debian/cefbrowser/usr/lib/cefbrowser/
+	install -d debian/cefbrowser/usr/bin
+	install -m 0755 debian/cefbrowser.wrapper debian/cefbrowser/usr/bin/cefbrowser
+
+override_dh_strip:
+	dh_strip -Xlibcef.so
+
+override_dh_shlibdeps:
+	dh_shlibdeps -l$(CURDIR)/debian/cefbrowser/usr/lib/cefbrowser
