@@ -12,12 +12,13 @@ BUILDDIR := obj-$(DEB_HOST_GNU_TYPE)
 override_dh_auto_configure:
 	test -d subprojects/cef/Release
 	test -d subprojects/cef/Resources
-	test -d subprojects/cpr
-	test -d subprojects/mini
-	test -d subprojects/spdlog
-	test -d subprojects/sqlite3
-	test -d subprojects/thrift
-	test -d subprojects/tiny_process_library
+	test -d subprojects/cpr-1.14.2
+	test -d subprojects/curl-8.12.1
+	test -d subprojects/mINI-0.9.14
+	test -d subprojects/spdlog-1.15.0
+	test -d subprojects/sqlite-amalgamation-3490100
+	test -d subprojects/thrift-0.24.0
+	test -d subprojects/tiny-process-library-4bf0e59e64f18d3080a1ce4e853775de2181e993
 	dh_auto_configure --buildsystem=meson -- -Darch=x86_64 -Dbuildtype=release
 
 override_dh_auto_install:
