@@ -24,6 +24,12 @@ override_dh_auto_configure:
 override_dh_auto_install:
 	install -d debian/cefbrowser/usr/lib/cefbrowser
 	cp -a $(BUILDDIR)/Release/. debian/cefbrowser/usr/lib/cefbrowser/
+	install -m 0755 $(BUILDDIR)/cefbrowser debian/cefbrowser/usr/lib/cefbrowser/cefbrowser
+	cp -a static-content/js debian/cefbrowser/usr/lib/cefbrowser/
+	cp -a static-content/css debian/cefbrowser/usr/lib/cefbrowser/
+	cp -a static-content/database debian/cefbrowser/usr/lib/cefbrowser/
+	cp -a static-content/application debian/cefbrowser/usr/lib/cefbrowser/
+	cp -a static-content/fonts debian/cefbrowser/usr/lib/cefbrowser/
 	install -d debian/cefbrowser/usr/bin
 	install -m 0755 debian/cefbrowser.wrapper debian/cefbrowser/usr/bin/cefbrowser
 
