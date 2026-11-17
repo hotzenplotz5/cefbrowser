@@ -24,9 +24,24 @@ git -C "${ROOT}" archive --format=tar HEAD | tar -xf - -C "${SOURCE_DIR}"
 cd "${SOURCE_DIR}"
 rm -rf subprojects/cef subprojects/packagecache
 
-# Meson wrap files contain their own immutable source hashes.  Resolve all wrap
-# dependencies now so the Launchpad builder never needs outbound network access.
-meson subprojects download
+download_rc=0
+meson subprojects download || download_rc=$?
+
+required_subprojects=(
+  cpr-1.14.2
+  curl-8.12.1
+  mINI-0.9.14
+  spdlog-1.15.0
+  sqlite-amalgamation-3490100
+  thrift-0.24.0
+  tiny-process-library-4bf0e59e64f18d3080a1ce4e853775de2181e993
+)
+for subproject in "${required_subprojects[@]}"; do
+  test -d "subprojects/${subproject}"
+done
+if (( download_rc != 0 )); then
+  printf 'MESON_SUBPROJECT_DOWNLOAD_EXIT=%s (required sources verified)\n' "${download_rc}"
+fi
 
 curl --fail --location --retry 3   "${CEF_URL}.sha1"   --output "subprojects/${CEF_ARCHIVE}.sha1"
 curl --fail --location --retry 3   "${CEF_URL}"   --output "subprojects/${CEF_ARCHIVE}"
