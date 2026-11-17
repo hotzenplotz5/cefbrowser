@@ -1,0 +1,66 @@
+name: Debian package
+
+on:
+  push:
+    branches:
+      - packaging/rellla-fixes
+    paths:
+      - 'debian/**'
+      - 'packaging/**'
+      - '.github/workflows/debian-package.yml'
+      - 'meson.build'
+      - 'meson_options.txt'
+      - 'setup.sh'
+      - 'subprojects/**'
+      - '*.cpp'
+      - '*.h'
+      - 'thrift-services/**'
+      - 'static-content/**'
+  workflow_dispatch:
+
+jobs:
+  noble-amd64:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y             build-essential devscripts debhelper dpkg-dev lintian             cmake meson ninja-build pkg-config libboost-dev curl xz-utils             libssl-dev libcurl4-openssl-dev libidn2-dev zlib1g-dev             libglib2.0-dev libnss3-dev libatk1.0-dev libatk-bridge2.0-dev             libcups2-dev libx11-dev libxcomposite-dev libxdamage-dev             libxrandr-dev libgbm-dev libxkbcommon-dev libpango1.0-dev             libasound2-dev
+
+      - name: Prepare offline source tree
+        run: |
+          ./packaging/prepare-orig.sh 0.1+git20261117.2931cc5
+          test -d dist/cefbrowser-0.1+git20261117.2931cc5/subprojects/cef/Release
+          test -f dist/cefbrowser_0.1+git20261117.2931cc5.orig.tar.xz
+
+      - name: Build binary package without network downloads
+        working-directory: dist/cefbrowser-0.1+git20261117.2931cc5
+        run: |
+          dpkg-buildpackage -us -uc -b
+
+      - name: Verify package payload
+        run: |
+          deb="$(find dist -maxdepth 1 -name 'cefbrowser_*_amd64.deb' -print -quit)"
+          test -n "$deb"
+          dpkg-deb -f "$deb" Package Version Architecture Depends
+          dpkg-deb -c "$deb" | grep -F './usr/lib/cefbrowser/cefbrowser'
+          dpkg-deb -c "$deb" | grep -F './usr/bin/cefbrowser'
+          dpkg-deb -c "$deb" | grep -F './usr/lib/systemd/system/cefbrowser.service'
+
+      - name: Lint package
+        run: |
+          lintian --no-fail-on-warnings dist/cefbrowser_*_amd64.deb || true
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cefbrowser-debian-amd64
+          path: |
+            dist/cefbrowser_*_amd64.deb
+            dist/cefbrowser_*.buildinfo
+            dist/cefbrowser_*.changes
+          if-no-files-found: error

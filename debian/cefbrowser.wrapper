@@ -1,0 +1,5 @@
+#!/bin/sh
+
+CEF_LIBDIR=/usr/lib/cefbrowser
+export LD_LIBRARY_PATH="${CEF_LIBDIR}${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
+exec "${CEF_LIBDIR}/cefbrowser" "$@"
