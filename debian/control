@@ -1,0 +1,46 @@
+Source: cefbrowser
+Section: video
+Priority: optional
+Maintainer: hotzenplotz5 <hotzenplotz5@gmx.de>
+Build-Depends:
+ debhelper-compat (= 13),
+ cmake,
+ g++,
+ meson,
+ ninja-build,
+ pkg-config,
+ libssl-dev,
+ libcurl4-openssl-dev,
+ libidn2-dev,
+ zlib1g-dev,
+ libglib2.0-dev,
+ libnss3-dev,
+ libatk1.0-dev,
+ libatk-bridge2.0-dev,
+ libcups2-dev,
+ libx11-dev,
+ libxcomposite-dev,
+ libxdamage-dev,
+ libxrandr-dev,
+ libgbm-dev,
+ libxkbcommon-dev,
+ libpango1.0-dev,
+ libasound2-dev
+Standards-Version: 4.7.0
+Rules-Requires-Root: no
+Homepage: https://github.com/hotzenplotz5/cefbrowser
+Vcs-Git: https://github.com/hotzenplotz5/cefbrowser.git
+Vcs-Browser: https://github.com/hotzenplotz5/cefbrowser
+
+Package: cefbrowser
+Architecture: amd64
+Depends:
+ ${shlibs:Depends},
+ ${misc:Depends},
+ vdr-plugin-web
+Description: Chromium Embedded Framework browser for VDR HbbTV
+ cefbrowser renders HbbTV applications for the VDR web plugin and exchanges
+ browser control and presentation data over the shared Thrift interfaces.
+ .
+ This package carries the CEF 126 runtime required by cefbrowser and is built
+ from the rellla fixes integration used by the VDR-Suite HbbTV stack.
