@@ -19,7 +19,7 @@ override_dh_auto_configure:
 	test -d subprojects/sqlite-amalgamation-3490100
 	test -d subprojects/thrift-0.24.0
 	test -d subprojects/tiny-process-library-4bf0e59e64f18d3080a1ce4e853775de2181e993
-	dh_auto_configure --buildsystem=meson -- -Darch=x86_64 -Dbuildtype=release
+	dh_auto_configure --buildsystem=meson -- -Darch=x86_64
 
 override_dh_auto_install:
 	install -d debian/cefbrowser/usr/lib/cefbrowser
