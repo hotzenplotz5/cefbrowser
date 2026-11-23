@@ -44,8 +44,8 @@ if get_option('vdrsternelec')
 endif
 
 cef_opt_var.append_compile_args('cpp', '-Wno-unused-variable')
-// Debian's Meson buildtype=plain does not define NDEBUG. The CEF wrapper
-// must therefore keep its DCHECK symbols as it does in Debug builds.
+# Debian's Meson buildtype=plain does not define NDEBUG. The CEF wrapper
+# must therefore keep its DCHECK symbols as it does in Debug builds.
 cef_opt_var.add_cmake_defines({'CMAKE_BUILD_TYPE': get_option('buildtype') == 'release' or get_option('buildtype') == 'minsize' ? 'Release' : 'Debug'})
 cef_proj = cmake.subproject('cef', options: cef_opt_var)
 cef_lib = cef_proj.dependency('libcef_dll_wrapper')
