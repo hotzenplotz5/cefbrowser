@@ -22,8 +22,11 @@ typedef struct BrowserParameter {
 
     image_type_enum osdqoi;
 
+    // Graphics plane, in pixels, and the ratio between it and the 1280x720
+    // co-ordinate system HbbTV applications are written against.
     int zoom_width;
     int zoom_height;
+    double zoom_level;
 
     bool use_dirty_recs;
 
@@ -36,7 +39,15 @@ typedef struct BrowserParameter {
     image_type_enum image_type;
 } BrowserParameter;
 
+// Set from --ignore-certificate-errors. The browser fetches pages itself
+// through libcurl, which never sees Chromium's command line, so without this
+// the two disagree about which certificates are acceptable.
+extern bool ignoreCertificateErrors;
+
 bool endsWith(const std::string& str, const std::string& suffix);
+
+// The https form of an http URL when the host serves it, else the URL as given.
+std::string preferHttps(const std::string &url);
 
 // height and zoom level for a page width (1280, 1920, 2560, 3840). Returns false for other widths.
 bool zoomForWidth(int width, int &height, double &zoomLevel);
@@ -50,6 +61,7 @@ std::string readFile(const char *filename);
 struct BrowserOptions {
     std::atomic<bool> mse { true };          // Media Source Extensions for VDR
     std::atomic<bool> zdfQuirks { true };    // special handling of the ZDF applications
+    std::atomic<bool> sharedMemory { false };  // the OSD in shared memory, VDR on the same machine
 };
 
 extern BrowserOptions browserOptions;

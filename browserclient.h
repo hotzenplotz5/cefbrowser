@@ -1,5 +1,6 @@
 #pragma once
 
+#include <chrono>
 #include "cef_includes.h"
 #include "logger.h"
 #include "tools.h"
@@ -7,6 +8,9 @@
 #include "thrift-services/src-client/TranscoderClient.h"
 #include "thrift-services/src-client/VdrClient.h"
 #include "osdsender.h"
+
+// the title of the current page, e.g. for the search of a video in MediathekView
+std::string CurrentPageTitle();
 
 class BrowserClient : public CefClient,
                       public CefRenderHandler,
@@ -37,8 +41,7 @@ public:
 
     // CefDisplayHandler
     CefRefPtr<CefDisplayHandler> GetDisplayHandler() override {
-        // Disabled
-        return nullptr;
+        return this;
     }
 
     // CefFrameHandler
@@ -60,10 +63,12 @@ public:
             bool &disable_default_handling) override;
 
     // RenderHandler
-    void setRenderSize(int width, int height);
+    void setRenderSize(int width, int height, double scale);
     int getRenderWidth() const { return renderWidth; }
 
     void GetViewRect(CefRefPtr<CefBrowser> browser, CefRect &rect) override;
+
+    bool GetScreenInfo(CefRefPtr<CefBrowser> browser, CefScreenInfo &screen_info) override;
 
     void OnPaint(CefRefPtr<CefBrowser> browser, PaintElementType type, const RectList &dirtyRects, const void *buffer,
                  int width, int height) override;
@@ -77,6 +82,7 @@ public:
     void OnRenderProcessTerminated(CefRefPtr<CefBrowser> browser, TerminationStatus status, int error_code, const CefString& error_string) override;
 
     // CefDisplayHandler
+    void OnTitleChange(CefRefPtr<CefBrowser> browser, const CefString& title) override;
     void OnStatusMessage(CefRefPtr<CefBrowser> browser, const CefString& value) override;
     bool OnConsoleMessage(CefRefPtr<CefBrowser> browser, cef_log_severity_t level, const CefString& message, const CefString& source, int line) override;
 
@@ -101,6 +107,8 @@ private:
 private:
     int renderWidth;
     int renderHeight;
+    // graphics plane pixels per CSS pixel
+    double scaleFactor;
     bool fullscreen;
     std::string streamId;
 
@@ -118,6 +126,9 @@ private:
     CefRefPtr<CefRegistration> registration;
 
     cpr::ConnectionPool pool;
+
+    // when the application last started another one (createApplication), UI thread only
+    std::chrono::steady_clock::time_point appStarted{};
 
 private:
     IMPLEMENT_REFCOUNTING(BrowserClient);
