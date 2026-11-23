@@ -1,4 +1,12 @@
-cefbrowser (0.1+git20261117.2931cc5-1~ppa1) UNRELEASED; urgency=medium
+cefbrowser (0.1+git20261123.681c63a-1~ppa1) UNRELEASED; urgency=medium
+
+  * Sync to Zabrimus upstream 681c63a7 and current HbbTV fixes.
+  * Preserve VDR-Suite Debian packaging and CEF 126 runtime composition.
+  * Fix std-format log excerpts and CEF wrapper buildtype compatibility.
+
+ -- hotzenplotz5 <hotzenplotz5@gmx.de>  Mon, 23 Nov 2026 13:00:00 +0100
+
+cefbrowser (0.1+git20261123.681c63a-1~ppa1) UNRELEASED; urgency=medium
 
   * Package the rellla/fixes integration head 2931cc51 for Ubuntu.
   * Add an offline Launchpad build path with CEF 126.2.7 prepared in the
