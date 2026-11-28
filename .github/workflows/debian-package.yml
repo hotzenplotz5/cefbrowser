@@ -50,6 +50,7 @@ jobs:
           dpkg-deb -f "$deb" Package Version Architecture Depends
           dpkg-deb -c "$deb" | grep -F './usr/lib/cefbrowser/cefbrowser'
           dpkg-deb -c "$deb" | grep -F './usr/bin/cefbrowser'
+          dpkg-deb -c "$deb" | grep -F './usr/lib/cefbrowser/js/_zoom_level.js -> /var/lib/cefbrowser/_zoom_level.js'
           dpkg-deb -c "$deb" | grep -F './usr/lib/systemd/system/cefbrowser.service'
 
       - name: Lint package

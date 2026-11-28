@@ -30,6 +30,8 @@ override_dh_auto_install:
 	cp -a static-content/database debian/cefbrowser/usr/lib/cefbrowser/
 	cp -a static-content/application debian/cefbrowser/usr/lib/cefbrowser/
 	cp -a static-content/fonts debian/cefbrowser/usr/lib/cefbrowser/
+	# The browser rewrites this script at startup and when render size changes.
+	ln -s /var/lib/cefbrowser/_zoom_level.js debian/cefbrowser/usr/lib/cefbrowser/js/_zoom_level.js
 	install -d debian/cefbrowser/usr/bin
 	install -m 0755 debian/cefbrowser.wrapper debian/cefbrowser/usr/bin/cefbrowser
 

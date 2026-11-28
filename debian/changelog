@@ -2,6 +2,7 @@ cefbrowser (0.1+git20261128.eb9d327-1~ppa1) UNRELEASED; urgency=medium
 
   * Integrate upstream eb9d327e video lifecycle and release directory fixes.
   * Preserve Debian CEF layout and wrapper compatibility.
+  * Keep the generated zoom script writable in the existing browser state directory.
 
  -- hotzenplotz5 <hotzenplotz5@gmx.de>  Sat, 28 Nov 2026 10:35:00 +0100
 
