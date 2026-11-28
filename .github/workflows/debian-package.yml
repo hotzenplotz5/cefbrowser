@@ -49,6 +49,7 @@ jobs:
 
       - name: Prepare offline source tree
         run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
           ./packaging/prepare-orig.sh 0.1+git20261128.eb9d327
           test -d dist/cefbrowser-0.1+git20261128.eb9d327/subprojects/cef/Release
           test -f dist/cefbrowser_0.1+git20261128.eb9d327.orig.tar.xz
