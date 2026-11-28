@@ -1,4 +1,6 @@
 d /var/lib/cefbrowser 0750 vdr vdr -
 d /var/lib/cefbrowser/profile 0750 vdr vdr -
+d /var/lib/cefbrowser/profile/cache 0750 vdr vdr -
+f /var/lib/cefbrowser/_dynamic.js 0640 vdr vdr -
 d /var/lib/cefbrowser/database 0750 vdr vdr -
 d /var/cache/cefbrowser 0750 vdr vdr -

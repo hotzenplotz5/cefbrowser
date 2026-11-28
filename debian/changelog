@@ -1,3 +1,10 @@
+cefbrowser (0.1+git20261128.eb9d327-1~ppa2) UNRELEASED; urgency=medium
+
+  * Keep CEF cache inside root_cache_path to preserve persistent storage.
+  * Route generated channel JavaScript into writable browser state.
+
+ -- hotzenplotz5 <hotzenplotz5@gmx.de>  Sat, 28 Nov 2026 17:43:00 +0100
+
 cefbrowser (0.1+git20261128.eb9d327-1~ppa1) UNRELEASED; urgency=medium
 
   * Integrate upstream eb9d327e video lifecycle and release directory fixes.

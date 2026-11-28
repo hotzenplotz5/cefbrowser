@@ -67,6 +67,11 @@ jobs:
           dpkg-deb -c "$deb" | grep -F './usr/lib/cefbrowser/cefbrowser'
           dpkg-deb -c "$deb" | grep -F './usr/bin/cefbrowser'
           dpkg-deb -c "$deb" | grep -F './usr/lib/cefbrowser/js/_zoom_level.js -> /var/lib/cefbrowser/_zoom_level.js'
+          dpkg-deb -c "$deb" | grep -F './usr/lib/cefbrowser/js/_dynamic.js -> /var/lib/cefbrowser/_dynamic.js'
+          payload=$(mktemp -d)
+          dpkg-deb -x "$deb" "$payload"
+          grep -F -- '--cachePath=/var/lib/cefbrowser/profile/cache' "$payload/usr/lib/systemd/system/cefbrowser.service"
+          grep -F 'f /var/lib/cefbrowser/_dynamic.js 0640 vdr vdr -' "$payload/usr/lib/tmpfiles.d/cefbrowser.conf"
           dpkg-deb -c "$deb" | grep -F './usr/lib/systemd/system/cefbrowser.service'
 
       - name: Lint package

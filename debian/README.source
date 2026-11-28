@@ -22,3 +22,12 @@ The Zabrimus cefbrowser repository itself currently has no project-wide licence
 file or explicit redistribution licence.  The package can be developed and
 built for testing, but public PPA publication must wait for explicit upstream
 redistribution terms or separate Launchpad approval.
+
+Runtime state
+-------------
+
+CEF's cache_path must be inside root_cache_path; the service uses
+/var/lib/cefbrowser/profile/cache. Generated js/_dynamic.js and
+js/_zoom_level.js resolve into /var/lib/cefbrowser, while packaged static
+assets remain under /usr/lib/cefbrowser. No write permissions on /usr/lib
+are necessary.
