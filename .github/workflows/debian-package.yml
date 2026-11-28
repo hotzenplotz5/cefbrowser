@@ -34,12 +34,12 @@ jobs:
 
       - name: Prepare offline source tree
         run: |
-          ./packaging/prepare-orig.sh 0.1+git20261123.681c63a
-          test -d dist/cefbrowser-0.1+git20261123.681c63a/subprojects/cef/Release
-          test -f dist/cefbrowser_0.1+git20261123.681c63a.orig.tar.xz
+          ./packaging/prepare-orig.sh 0.1+git20261128.eb9d327
+          test -d dist/cefbrowser-0.1+git20261128.eb9d327/subprojects/cef/Release
+          test -f dist/cefbrowser_0.1+git20261128.eb9d327.orig.tar.xz
 
       - name: Build binary package without network downloads
-        working-directory: dist/cefbrowser-0.1+git20261123.681c63a
+        working-directory: dist/cefbrowser-0.1+git20261128.eb9d327
         run: |
           dpkg-buildpackage -us -uc -b
 

@@ -26,6 +26,11 @@ meson install
 ```
 The whole binary including all necessary files/libs exists in folder ```build/Release```.
 
+With ```meson setup -Drelease_dir=false build``` cefbrowser is installed into the ```bindir``` of the prefix
+instead, its static content into ```staticdir``` (```<prefix>/cefbrowser``` by default). The browser writes
+to the static content, so it must be writable; cefbrowser needs it as ```--staticPath```.
+```-Dcef_libdir``` names the directory of an installed libcef.so.
+
 ### Configuration
 A default configuration can be found in folder config: ```sockets.ini```.
 
@@ -33,7 +38,7 @@ A default configuration can be found in folder config: ```sockets.ini```.
 It's safe to use the same sockets.ini for all of the three parts (vdr-plugin-web, cefbrowser, remotetranscoder). 
 
 ### Start
-Change to directory ```build/Release```.
+Change to directory ```build/Release```, or start the installed cefbrowser (```release_dir=false```) with ```--staticPath```.
 
 ```./cefbrowser  --config=/path/to/sockets.ini --remote-allow-origins=http://localhost:9222```
 

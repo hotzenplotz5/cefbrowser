@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-UPSTREAM_VERSION="${1:-0.1+git20261123.681c63a}"
+UPSTREAM_VERSION="${1:-0.1+git20261128.eb9d327}"
 OUTDIR="${2:-${ROOT}/dist}"
 SOURCE_DIR="${OUTDIR}/cefbrowser-${UPSTREAM_VERSION}"
 ORIG_TARBALL="${OUTDIR}/cefbrowser_${UPSTREAM_VERSION}.orig.tar.xz"
@@ -69,4 +69,4 @@ tar --sort=name   --mtime="@${SOURCE_DATE_EPOCH}"   --owner=0 --group=0 --numeri
 printf 'PREPARED_SOURCE=%s\n' "${SOURCE_DIR}"
 printf 'ORIG_TARBALL=%s\n' "${ORIG_TARBALL}"
 printf 'FORK_SOURCE_HEAD=%s\n' "$(git -C "${ROOT}" rev-parse HEAD)"
-printf 'UPSTREAM_FIX_HEAD=%s\n' "681c63a779f84fa16a247bd032ff0332d2c3620f"
+printf 'UPSTREAM_FIX_HEAD=%s\n' "eb9d327ec96b1e6a1f43e42793b56dee91569cc2"

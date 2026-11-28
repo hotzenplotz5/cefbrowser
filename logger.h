@@ -54,6 +54,7 @@ inline std::string logExcerpt(const std::string &text, size_t limit = 4000) {
         return text;
     }
 
+    // not fmt::format: spdlog may use std::format instead of fmt
     return text.substr(0, limit) + "... [" + std::to_string(text.length()) +
            " bytes, " + std::to_string(limit) + " shown]";
 }

@@ -1,3 +1,10 @@
+cefbrowser (0.1+git20261128.eb9d327-1~ppa1) UNRELEASED; urgency=medium
+
+  * Integrate upstream eb9d327e video lifecycle and release directory fixes.
+  * Preserve Debian CEF layout and wrapper compatibility.
+
+ -- hotzenplotz5 <hotzenplotz5@gmx.de>  Sat, 28 Nov 2026 10:35:00 +0100
+
 cefbrowser (0.1+git20261123.681c63a-1~ppa1) UNRELEASED; urgency=medium
 
   * Sync to Zabrimus upstream 681c63a7 and current HbbTV fixes.
