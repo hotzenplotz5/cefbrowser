@@ -1,0 +1,32 @@
+cefbrowser (0.1+git20261128.eb9d327-1~ppa2) UNRELEASED; urgency=medium
+
+  * Keep CEF cache inside root_cache_path to preserve persistent storage.
+  * Route generated channel JavaScript into writable browser state.
+
+ -- hotzenplotz5 <hotzenplotz5@gmx.de>  Sat, 28 Nov 2026 17:43:00 +0100
+
+cefbrowser (0.1+git20261128.eb9d327-1~ppa1) UNRELEASED; urgency=medium
+
+  * Integrate upstream eb9d327e video lifecycle and release directory fixes.
+  * Preserve Debian CEF layout and wrapper compatibility.
+  * Keep the generated zoom script writable in the existing browser state directory.
+
+ -- hotzenplotz5 <hotzenplotz5@gmx.de>  Sat, 28 Nov 2026 10:35:00 +0100
+
+cefbrowser (0.1+git20261123.681c63a-1~ppa1) UNRELEASED; urgency=medium
+
+  * Sync to Zabrimus upstream 681c63a7 and current HbbTV fixes.
+  * Preserve VDR-Suite Debian packaging and CEF 126 runtime composition.
+  * Fix std-format log excerpts and CEF wrapper buildtype compatibility.
+
+ -- hotzenplotz5 <hotzenplotz5@gmx.de>  Mon, 23 Nov 2026 13:00:00 +0100
+
+cefbrowser (0.1+git20261123.681c63a-1~ppa1) UNRELEASED; urgency=medium
+
+  * Package the rellla/fixes integration head 2931cc51 for Ubuntu.
+  * Add an offline Launchpad build path with CEF 126.2.7 prepared in the
+    source package before upload.
+  * Install the browser runtime under /usr/lib/cefbrowser with a systemd unit
+    and persistent state outside the package payload.
+
+ -- hotzenplotz5 <hotzenplotz5@gmx.de>  Tue, 17 Nov 2026 19:00:00 +0100

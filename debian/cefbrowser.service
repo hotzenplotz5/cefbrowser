@@ -1,0 +1,21 @@
+[Unit]
+Description=HbbTV CEF Browser
+After=network-online.target vdr.service
+Wants=network-online.target
+
+[Service]
+User=vdr
+Group=vdr
+WorkingDirectory=/var/lib/cefbrowser
+Environment=HOME=/var/lib/cefbrowser
+Environment=XDG_CACHE_HOME=/var/cache/cefbrowser
+Environment=LD_LIBRARY_PATH=/usr/lib/cefbrowser
+ExecStart=/usr/lib/cefbrowser/cefbrowser --config=/etc/vdr/sockets.ini --profilePath=/var/lib/cefbrowser/profile --cachePath=/var/lib/cefbrowser/profile/cache --staticPath=/usr/lib/cefbrowser --browserdb=/var/lib/cefbrowser/database --uagent=/usr/lib/cefbrowser/database --ozone-platform=headless --disable-gpu
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=20
+NoNewPrivileges=true
+UMask=0027
+
+[Install]
+WantedBy=multi-user.target
