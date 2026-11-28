@@ -19,18 +19,33 @@ on:
   workflow_dispatch:
 
 jobs:
-  noble-amd64:
+  package-amd64:
+    name: ${{ matrix.series }}-amd64
     runs-on: ubuntu-24.04
+    container:
+      image: ${{ matrix.image }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - series: noble
+            image: ubuntu:24.04
+          - series: resolute
+            image: ubuntu:26.04
+    env:
+      DEBIAN_FRONTEND: noninteractive
     timeout-minutes: 90
     steps:
+      - name: Install build dependencies for ${{ matrix.series }}
+        run: |
+          . /etc/os-release
+          test "$VERSION_CODENAME" = "${{ matrix.series }}"
+          apt-get update
+          apt-get install -y ca-certificates git curl             build-essential devscripts debhelper dpkg-dev lintian             cmake meson ninja-build pkg-config libboost-dev curl xz-utils             libssl-dev libcurl4-openssl-dev libidn2-dev zlib1g-dev             libglib2.0-dev libnss3-dev libatk1.0-dev libatk-bridge2.0-dev             libcups2-dev libx11-dev libxcomposite-dev libxdamage-dev             libxrandr-dev libgbm-dev libxkbcommon-dev libpango1.0-dev             libasound2-dev
+
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      - name: Install build dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y             build-essential devscripts debhelper dpkg-dev lintian             cmake meson ninja-build pkg-config libboost-dev curl xz-utils             libssl-dev libcurl4-openssl-dev libidn2-dev zlib1g-dev             libglib2.0-dev libnss3-dev libatk1.0-dev libatk-bridge2.0-dev             libcups2-dev libx11-dev libxcomposite-dev libxdamage-dev             libxrandr-dev libgbm-dev libxkbcommon-dev libpango1.0-dev             libasound2-dev
 
       - name: Prepare offline source tree
         run: |
@@ -59,7 +74,7 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: cefbrowser-debian-amd64
+          name: cefbrowser-debian-${{ matrix.series }}-amd64
           path: |
             dist/cefbrowser_*_amd64.deb
             dist/cefbrowser_*.buildinfo
